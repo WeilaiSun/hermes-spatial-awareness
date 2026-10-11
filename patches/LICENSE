@@ -1,0 +1,7 @@
+The weather-field patch modifies whereabouts-mcp, which is licensed under
+GNU General Public License v3.0. This patch is therefore distributed under
+GPL-3.0 as well, consistent with the upstream license.
+
+SPDX-License-Identifier: GPL-3.0-only
+Upstream: https://github.com/WenXiaoWendy/whereabouts-mcp
+Copyright (c) 2026 WeilaiSun

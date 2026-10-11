@@ -49,6 +49,7 @@ SOUL.md 行为规则 → 场景化回复
 | `whereabouts-mcp` | 位置接收服务（含 weather 字段补丁） | 基于 [WenXiaoWendy/whereabouts-mcp](https://github.com/WenXiaoWendy/whereabouts-mcp) (AGPL-3.0) |
 | `plugin/` | spatial-injector 注入插件（MIT） | 本仓库原创 |
 | `scripts/` | Windows 部署脚本（启动+watchdog 守护） | 本仓库原创 |
+| `patches/` | weather 字段落库补丁（可选，GPL-3.0） | 对上游的 3 行修改 |
 | `docs/DESIGN.md` | 完整设计文档（含决策记录与隐私边界） | 本仓库 |
 
 ## 快速开始
@@ -87,6 +88,15 @@ curl http://127.0.0.1:4318/healthz
 # 模拟上报
 curl -X POST http://127.0.0.1:4318/location/ingest -H "Authorization: Bearer <TOKEN>" -H "Content-Type: application/json" -d "{\"latitude\":31.12,\"longitude\":121.45,\"trigger\":\"manual\",\"batteryLevel\":80}"
 ```
+
+**可选：让天气随位置一起落库**（快照里带 weather 字段，注入串直接显示，免另调天气 API）：
+
+```bash
+patch -p1 < patches/whereabouts-weather-field.patch
+npm run check && npm test
+```
+
+（补丁为 GPL-3.0，见 [patches/README.md](patches/README.md)；不打补丁不影响其余功能）
 
 ### 2. 注册开机自启 + 守护
 
@@ -144,12 +154,13 @@ xcopy /E /I plugin "%HERMES_HOME%\plugins\spatial-injector\"
 
 ## License
 
-- `plugin/`、`scripts/`、`docs/`：MIT
-- whereabouts-mcp 上游：AGPL-3.0（本仓库未修改其源码，独立进程部署；如需 weather 字段落库能力，参考上游仓库提 PR）
+- `plugin/`、`scripts/`、`docs/`、`images/`：**MIT**
+- `patches/`（对 whereabouts-mcp 的修改）：**GPL-3.0**（上游为 GPL-3.0，修改必须同许可证发布）
+- whereabouts-mcp 上游本体：GPL-3.0，独立进程部署，本仓库不再分发其源码
 
 ## 致谢
 
-- [WenXiaoWendy/whereabouts-mcp](https://github.com/WenXiaoWendy/whereabouts-mcp) — 优雅的位置上下文服务
+- [WenXiaoWendy/whereabouts-mcp](https://github.com/WenXiaoWendy/whereabouts-mcp) (GPL-3.0) — 优雅的位置上下文服务
 - [Nous Research](https://github.com/nousresearch/hermes-agent) — Hermes Agent 与插件系统
 - [HermesPilot](https://github.com/) — 手机端通道
 

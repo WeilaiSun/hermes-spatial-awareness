@@ -12,9 +12,11 @@ furnished to do so, subject to the following conditions:
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 
-Note: The bundled whereabouts-mcp service is licensed separately under
-AGPL-3.0 by its upstream authors. This repository deploys it as an independent
-process without modification.
+Note: The optional patch in patches/ modifies whereabouts-mcp, which is
+licensed under GNU General Public License v3.0 by its upstream authors;
+the patch is therefore distributed under GPL-3.0 (see patches/LICENSE).
+The upstream service itself is deployed as an independent process and its
+source is not redistributed in this repository.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,

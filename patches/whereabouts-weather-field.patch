@@ -1,0 +1,26 @@
+--- whereabouts-pristine/src/location-store.js	2026-04-22 23:50:17.000000000 +0800
++++ whereabouts-mcp/src/location-store.js	2026-10-11 01:51:48.492739900 +0800
+@@ -276,6 +276,7 @@
+   assignOptionalText(point, "shortcutName", value.shortcutName);
+   assignOptionalText(point, "address", value.address);
+   assignOptionalText(point, "notes", value.notes);
++  assignOptionalText(point, "weather", value.weather);
+   return point;
+ }
+ 
+@@ -333,6 +334,7 @@
+     shortcutName: point.shortcutName,
+     placeTag: point.placeTag,
+     address: point.address,
++    weather: point.weather,
+     batteryLevel: point.batteryLevel,
+   };
+ }
+@@ -400,6 +402,7 @@
+   assignOptionalText(target, "shortcutName", point.shortcutName);
+   assignOptionalText(target, "placeTag", point.placeTag);
+   assignOptionalText(target, "address", point.address);
++  assignOptionalText(target, "weather", point.weather);
+   assignOptionalNumber(target, "batteryLevel", point.batteryLevel);
+ }
+ 
