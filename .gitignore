@@ -1,0 +1,7 @@
+.env
+*.log
+state/
+token*
+output_images/
+__pycache__/
+*.pyc

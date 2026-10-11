@@ -1,0 +1,10 @@
+{
+  "latitude": 31.123456,
+  "longitude": 121.123456,
+  "timestamp": "2026-10-11T12:00:00+08:00",
+  "address": "Optional street address from iOS",
+  "batteryLevel": 82,
+  "trigger": "manual",
+  "source": "shortcuts",
+  "deviceName": "iphone-15"
+}

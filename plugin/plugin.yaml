@@ -1,0 +1,7 @@
+name: spatial-injector
+version: "1.0.0"
+description: "Injects location (from whereabouts-mcp state file) and channel context into each turn via pre_llm_call. Degrades gracefully when location service is down."
+author: "Hermes + 大圣"
+kind: standalone
+hooks:
+  - pre_llm_call
