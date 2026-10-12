@@ -1,6 +1,6 @@
 """spatial-injector v1.0 — Location + channel context injection via pre_llm_call.
 
-Per docs/DESIGN.md v1.2 in this repository:
+Per DESIGN.md v1.2 (F:/Hermes/HERMES_WORK/spatial-awareness/DESIGN.md):
 
 - Location: reads whereabouts-mcp state file (locations.json, absolute path,
   NEVER home-relative — see v1.2 NSSM/HOME-split fix). Injects a compact
@@ -37,7 +37,7 @@ logger = logging.getLogger(__name__)
 # Absolute path (v1.2: never home-relative). Override via env for tests.
 STATE_FILE = os.environ.get(
     "SPATIAL_STATE_FILE",
-    os.path.join(os.path.expanduser("~"), ".spatial-awareness", "locations.json"),
+    r"F:\Hermes\HERMES_WORK\spatial-awareness\state\locations.json",
 )
 
 # whereabouts-mcp default layout keeps everything under state_dir/locations.json
@@ -170,7 +170,11 @@ def _resolve_channel(kwargs: dict) -> str:
     # 2) Fallback: HermesPilot App session vs desktop, via link.db.
     channel = _channel_from_linkdb(kwargs)
     if channel:
-        return channel
+        # link.db records SESSION ownership (created-at snapshot), not the
+        # per-message origin. Same-session front-end switches (App -> desktop
+        # GUI continue the same session) are invisible on this path, so mark
+        # it as a snapshot (2026-10-12, real-world finding).
+        return f"{channel}(会话归属)"
 
     return "unknown"
 
@@ -226,6 +230,9 @@ def _channel_from_linkdb(kwargs: dict) -> Optional[str]:
 
 def _on_pre_llm_call(**kwargs: Any) -> dict | None:
     try:
+        import os
+        with open(r"F:\Hermes\HERMES_WORK\spatial-awareness\hook-probe.log", "a", encoding="utf-8") as _pf:
+            _pf.write(f"[{__import__('datetime').datetime.now().strftime('%H:%M:%S')}] hook ran pid={os.getpid()} platform={kwargs.get('platform')!r} session={kwargs.get('session_id')!r}\n")
         now = datetime.now().astimezone()
         pieces = [f"[Current context: {now.strftime('%Y-%m-%d %H:%M %Z')}"]
 
